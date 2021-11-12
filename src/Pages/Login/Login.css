@@ -1,0 +1,74 @@
+#gradient-vertical {
+    --color-stop-1: #00c3ff;
+    --color-stop-2: #7300e6;
+    --color-stop-3: #d91cff;
+  }
+  
+.log-ct {
+    height: 100vh;
+    display:flex;
+    justify-content:center;
+  align-items:center;
+}
+.bg-box {
+   
+    
+   position: absolute;
+   z-index: 0;
+   
+}
+.bg {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    filter: blur(6px);
+    opacity: 43%;
+   
+}
+
+.svg-box {
+    width: 400px;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.svg {
+    width: 150px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+   
+}
+.box-login {
+    width: 420px;
+    row-gap: 16px;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    background-color: #dddddd25;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 0px;
+    z-index: 1000;
+}
+
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.btn {
+    width: 200px;
+}
+  
