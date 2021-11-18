@@ -1,6 +1,5 @@
 import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Homepage';
-import SignUp from './Pages/SignUp/CreateUser';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
@@ -14,9 +13,7 @@ const Routes = () => {
      <Route path="/home">
            <Home /> 
      </Route>
-     <Route path="/signup">
-           <SignUp /> 
-     </Route>
+    
    </Switch>
 
 
