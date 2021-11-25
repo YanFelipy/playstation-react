@@ -5,13 +5,43 @@ import Bg from './ps-bg.jpg';
 import { Button, Modal } from 'react-bootstrap';
 import './Login.css';
 import { useState } from 'react';
-
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 
 const Login = () => {
 
-  const [show, setShow] = useState(false);
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Campo de nome é obrigatório!"),
+    lastName: Yup.string().required("Campo de sobrenome é obrigatório!"),
+    email: Yup.string()
+      .email("Digite um e-mail valido!")
+      .required("Campo de email é obrigatório!"),
+    password: Yup.string()
+      .required("Campo de senha é obrigatório!")
+      .min(6, "A senha deve conter pelo menos 6 digitos."),
+    confirmPassword: Yup.string()
+      .required("Campo de senha é obrigatório!")
+      .oneOf([Yup.ref("password")], "As senhas devem ser iguais."),
+  });
 
+
+  const { register, handleSubmit, formState: { errors }, } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+
+
+  function onSubmit(data) {
+
+
+    console.log(data);
+
+  }
+
+
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -53,35 +83,49 @@ const Login = () => {
               </Modal.Header>
 
               <Modal.Body>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
 
                   <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="floatingName" placeholder="Name" />
-                    <label htmlFor="floatingPassword">Nome</label>
+                    <input type="text" className="form-control" id="floatingName" placeholder="Name" 
+                      {...register("name")} />
+                    <label htmlFor="floatingName"><span className="text-danger px-1">*</span>Nome</label>
                   </div>
+                  <p> {errors.name?.message} </p>
                   <div className="form-floating mb-3">
-                    <input value="" type="text" className="form-control" id="floatingSecondName" placeholder="Name" />
-                    <label htmlFor="floatingPassword">Sobrenome</label>
+                  <input type ="text" className="form-control" id="floatingLastName" placeholder="Last Name" 
+                   {...register("lastName")} />
+                  <label htmlFor="floatingLastName"><span className="text-danger px-1">*</span>Sobrenome</label>
                   </div>
-
+                  <p> {errors.lastName?.message} </p>
                   <div className="mb-3">
-                    <div className="form-floating mb-3">
-                      <input type="email" className="form-control" id="floatingInputValue" placeholder="name@example.com" />
-                      <label htmlFor="floatingInputValue">Email:</label>
-                    </div>
+                  <div className="form-floating mb-3">
+                  <input type ="email" className="form-control" id="floatingInputValue" placeholder="name@example.com" 
+                   {...register("email")} />
+                  <label htmlFor="floatingInputValue"><span className="text-danger px-1">*</span>Email: </label>
+                  </div>
+                  <p> {errors.email?.message} </p>
                   </div>
 
 
                   <div className="mb-3 d-flex ">
-                    <div className="form-floating mb-3 col-6">
-                      <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
-                      <label htmlFor="floatingPassword">Senha</label>
-                    </div>
-                    <div className="form-floating mb-3 col-6">
-                      <input type="password" className="form-control" id="floatingConfirmPassword" placeholder="Password" />
-                      <label htmlFor="floatingConfirmPassword">Confirme a senha</label>
-                    </div>
+                  <div className="form-floating mb-3 col-6">
+                  <input type ="password" className="form-control" id="floatingPassword" placeholder="Password"
+                  {...register("password")}/>
+                  <label htmlFor="floatingPassword"><span className="text-danger px-1">*</span>Senha</label>
+                  <p> {errors.password?.message} </p>
                   </div>
+
+                  <div className="form-floating mb-3 col-6">
+                  <input type ="password" className="form-control" id="floatingConfirmPassword" placeholder="Password"
+                  {...register("confirmPassword")}  passwordConfirm={true}  />
+                  <label htmlFor="floatingConfirmPassword"><span  className="text-danger px-1">*</span>Confirme a senha</label>
+                  <p> {errors.confirmPassword?.message} </p>
+                  </div>
+
+                  </div>
+                  <div className="d-flex justify-content-center align-items-center">
+                <Button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={onSubmit} >Enviar dados</Button>
+                </div>
                 </form>
               </Modal.Body>
 
