@@ -75,6 +75,13 @@ body {
     width: 200px;
     border-radius: 50px;
 }
+
+.err-message {
+    padding: 2px;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: firebrick;
+}
   
 
 @keyframes BottomAnimation {

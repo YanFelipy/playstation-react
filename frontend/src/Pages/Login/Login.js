@@ -8,6 +8,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { toast } from 'react-toastify';
+
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
@@ -27,22 +31,28 @@ const Login = () => {
   });
 
 
-  const { register, handleSubmit, formState: { errors }, } = useForm({
+  const { register, reset , handleSubmit, formState: { errors }, } = useForm({
     resolver: yupResolver(schema),
   });
 
 
 
   function onSubmit(data) {
+    console.log(data)
+    toast.success('Usuário cadastrado com sucesso')
+    handleClose()
 
-
-    console.log(data);
-
+      
   }
 
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+
+  const handleClose = () => {
+    setShow(false)
+    reset()
+    }
+
   const handleShow = () => setShow(true);
 
 
@@ -90,20 +100,20 @@ const Login = () => {
                       {...register("name")} />
                     <label htmlFor="floatingName"><span className="text-danger px-1">*</span>Nome</label>
                   </div>
-                  <p> {errors.name?.message} </p>
+                  <p className="err-message"> {errors.name?.message} </p>
                   <div className="form-floating mb-3">
                   <input type ="text" className="form-control" id="floatingLastName" placeholder="Last Name" 
                    {...register("lastName")} />
                   <label htmlFor="floatingLastName"><span className="text-danger px-1">*</span>Sobrenome</label>
                   </div>
-                  <p> {errors.lastName?.message} </p>
+                  <p p className="err-message"> {errors.lastName?.message} </p>
                   <div className="mb-3">
                   <div className="form-floating mb-3">
                   <input type ="email" className="form-control" id="floatingInputValue" placeholder="name@example.com" 
                    {...register("email")} />
                   <label htmlFor="floatingInputValue"><span className="text-danger px-1">*</span>Email: </label>
                   </div>
-                  <p> {errors.email?.message} </p>
+                  <p p className="err-message"> {errors.email?.message} </p>
                   </div>
 
 
@@ -112,14 +122,14 @@ const Login = () => {
                   <input type ="password" className="form-control" id="floatingPassword" placeholder="Password"
                   {...register("password")}/>
                   <label htmlFor="floatingPassword"><span className="text-danger px-1">*</span>Senha</label>
-                  <p> {errors.password?.message} </p>
+                  <p p className="err-message"> {errors.password?.message} </p>
                   </div>
 
                   <div className="form-floating mb-3 col-6">
                   <input type ="password" className="form-control" id="floatingConfirmPassword" placeholder="Password"
                   {...register("confirmPassword")}  passwordConfirm={true}  />
                   <label htmlFor="floatingConfirmPassword"><span  className="text-danger px-1">*</span>Confirme a senha</label>
-                  <p> {errors.confirmPassword?.message} </p>
+                  <p p className="err-message"> {errors.confirmPassword?.message} </p>
                   </div>
 
                   </div>
@@ -129,7 +139,7 @@ const Login = () => {
                 </form>
               </Modal.Body>
 
-              <Modal.Footer className="d-flex align-items-center justify-content-center">
+              <Modal.Footer className="d-flex  align-items-center justify-content-center">
                 <Button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Fechar</Button>
 
               </Modal.Footer>
