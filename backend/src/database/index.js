@@ -1,7 +1,9 @@
-import { Sequelize } from 'sequelize'
-import configDatabase from '../config/database'
+import Sequelize from 'sequelize'
 
 import User from '../app/models/User'
+
+import configDatabase from '../config/database'
+
 const models = [User]
 
 class Database {
