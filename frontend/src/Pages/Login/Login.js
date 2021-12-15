@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import { api } from '../../services/api'
 
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,15 +38,12 @@ const Login = () => {
 
 
 
-  function onSubmit(data) {
-    console.log(data)
-    toast.success('Usuário cadastrado com sucesso')
-    handleClose()
-
-      
-  }
-
-
+  //function onSubmit(data) {
+  //  console.log(data.name)
+    //toast.success('Usuário cadastrado com sucesso')
+   
+ // }
+ 
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -54,6 +52,58 @@ const Login = () => {
     }
 
   const handleShow = () => setShow(true);
+
+
+
+
+
+
+  const onSubmit = async (data) => {
+    try {
+      const { status } = await api.post(
+        "/users",
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        },
+        {
+          validateStatus: () => true,
+        }
+      );
+
+      if (status === 201 || status === 200) {
+        toast.success("Cadastro criado com sucesso!");
+        handleClose();
+      } else if (status === 409) {
+        toast.error("E-mail já cadastrado, faça login para continuar!");
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      toast.error("Falha no sistema! Tente novamente mais tarde.");
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
@@ -127,14 +177,14 @@ const Login = () => {
 
                   <div className="form-floating mb-3 col-6">
                   <input type ="password" className="form-control" id="floatingConfirmPassword" placeholder="Password"
-                  {...register("confirmPassword")}  passwordConfirm={true}  />
+                  {...register("confirmPassword")} />
                   <label htmlFor="floatingConfirmPassword"><span  className="text-danger px-1">*</span>Confirme a senha</label>
                   <p p className="err-message"> {errors.confirmPassword?.message} </p>
                   </div>
 
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
-                <Button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={onSubmit} >Enviar dados</Button>
+                <Button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Enviar dados</Button>
                 </div>
                 </form>
               </Modal.Body>

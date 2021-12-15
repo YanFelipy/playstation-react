@@ -1,7 +1,9 @@
 body {
     background-color: rgb(4, 4, 4);
 }
-
+i.mdi.mdi-account {
+    pointer-events: none;
+  }
 
 #gradient-vertical {
     --color-stop-1: #00c3ff;
